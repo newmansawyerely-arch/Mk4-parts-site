@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MK4GolfParts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>MK4GolfParts</h1>
+  <p class="tagline">Find the Best Parts for Your MK4 Golf</p>
+</header>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Search parts...">
+
+  <select id="category">
+    <option value="all">All Categories</option>
+    <option value="engine">Engine</option>
+    <option value="suspension">Suspension</option>
+    <option value="brakes">Brakes</option>
+    <option value="exterior">Exterior</option>
+    <option value="interior">Interior</option>
+  </select>
+</div>
+
+<main id="products"></main>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "MK4 Coilover Suspension Kit",
+    "price": 350,
+    "category": "suspension",
+    "image": "https://via.placeholder.com/300",
+    "description": "Adjustable coilovers.",
+    "amazon": "https://a.co/d/0aHGd66J",
+    "ebay": "https://www.ebay.com/itm/153094206905"
+  },
+  {
+    "id": 2,
+    "name": "Cold Air Intake",
+    "price": 120,
+    "category": "engine",
+    "image": "https://via.placeholder.com/300",
+    "description": "Improves airflow.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 3,
+    "name": "Big Brake Kit",
+    "price": 450,
+    "category": "brakes",
+    "image": "https://via.placeholder.com/300",
+    "description": "Better stopping power.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 4,
+    "name": "Turbo Upgrade Kit",
+    "price": 900,
+    "category": "engine",
+    "image": "https://via.placeholder.com/300",
+    "description": "Boost performance.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 5,
+    "name": "Catback Exhaust System",
+    "price": 500,
+    "category": "engine",
+    "image": "https://via.placeholder.com/300",
+    "description": "Improves sound.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 6,
+    "name": "Lowering Springs",
+    "price": 200,
+    "category": "suspension",
+    "image": "https://via.placeholder.com/300",
+    "description": "Lower stance.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 7,
+    "name": "Front Lip Spoiler",
+    "price": 150,
+    "category": "exterior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Aggressive look.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 8,
+    "name": "LED Headlights",
+    "price": 250,
+    "category": "exterior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Brighter lights.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 9,
+    "name": "Short Shifter Kit",
+    "price": 100,
+    "category": "interior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Faster shifts.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 10,
+    "name": "Steering Wheel Upgrade",
+    "price": 220,
+    "category": "interior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Sport feel.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 11,
+    "name": "Brake Pads Performance",
+    "price": 90,
+    "category": "brakes",
+    "image": "https://via.placeholder.com/300",
+    "description": "Better grip.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 12,
+    "name": "Slotted Rotors",
+    "price": 180,
+    "category": "brakes",
+    "image": "https://via.placeholder.com/300",
+    "description": "Heat dissipation.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 13,
+    "name": "Intercooler Upgrade",
+    "price": 300,
+    "category": "engine",
+    "image": "https://via.placeholder.com/300",
+    "description": "Cooler air intake.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 14,
+    "name": "Fuel Pump Upgrade",
+    "price": 250,
+    "category": "engine",
+    "image": "https://via.placeholder.com/300",
+    "description": "Higher fuel flow.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 15,
+    "name": "Rear Spoiler",
+    "price": 130,
+    "category": "exterior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Sport look.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 16,
+    "name": "Side Skirts",
+    "price": 200,
+    "category": "exterior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Lower profile.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 17,
+    "name": "Shift Knob",
+    "price": 60,
+    "category": "interior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Custom feel.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 18,
+    "name": "Pedal Set",
+    "price": 70,
+    "category": "interior",
+    "image": "https://via.placeholder.com/300",
+    "description": "Grip pedals.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 19,
+    "name": "Strut Bar",
+    "price": 110,
+    "category": "suspension",
+    "image": "https://via.placeholder.com/300",
+    "description": "Chassis stiffness.",
+    "amazon": "#",
+    "ebay": "#"
+  },
+  {
+    "id": 20,
+    "name": "Wheel Spacers",
+    "price": 90,
+    "category": "suspension",
+    "image": "https://via.placeholder.com/300",
+    "description": "Wider stance.",
+    "amazon": "#",
+    "ebay": "#"
+  }
+]
