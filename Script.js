@@ -1,6 +1,6 @@
 let partsData = [];
 
-fetch("data.json")
+fetch("Data.json")
   .then(res => res.json())
   .then(data => {
     partsData = data;
