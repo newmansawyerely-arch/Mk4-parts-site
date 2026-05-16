@@ -37,7 +37,7 @@ function displayParts(parts) {
         <h2>${part.name}</h2>
         <p class="price">$${part.price}</p>
 
-        <div>
+        
           <div>
   ${part.amazon ? `
     <a href="${part.amazon}" target="_blank" class="btn amazon">Amazon</a>
@@ -46,7 +46,7 @@ function displayParts(parts) {
   ${part.ebay ? `
     <a href="${part.ebay}" target="_blank" class="btn ebay">eBay</a>
   ` : ""}
-</div>
+
         </div>
       </div>
     `;
