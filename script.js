@@ -38,8 +38,15 @@ function displayParts(parts) {
         <p class="price">$${part.price}</p>
 
         <div>
-          <a href="${part.amazon}" target="_blank" class="btn amazon">Amazon</a>
-          <a href="${part.ebay}" target="_blank" class="btn ebay">eBay</a>
+          <div>
+  ${part.amazon ? `
+    <a href="${part.amazon}" target="_blank" class="btn amazon">Amazon</a>
+  ` : ""}
+
+  ${part.ebay ? `
+    <a href="${part.ebay}" target="_blank" class="btn ebay">eBay</a>
+  ` : ""}
+</div>
         </div>
       </div>
     `;
