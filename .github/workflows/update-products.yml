@@ -1,0 +1,36 @@
+name: Auto Import eBay Listings
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install axios
+        run: npm install axios
+
+      - name: Run Import Script
+        env:
+          EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+        run: node scripts/ebay-import.js
+
+      - name: Commit Changes
+        run: |
+          git config user.name github-actions
+          git config user.email actions@github.com
+          git add .
+          git commit -m "Auto-update products" || echo "No changes"
+          git push
