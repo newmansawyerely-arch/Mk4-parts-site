@@ -56,7 +56,7 @@ async function main() {
     }));
 
     fs.writeFileSync(
-      "products.json",
+      "data.json",
       JSON.stringify(products, null, 2)
     );
 
