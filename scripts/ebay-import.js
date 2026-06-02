@@ -31,22 +31,30 @@ async function searchEbay(token) {
       },
       params: {
         q: "MK4 Golf GTI parts",
-        limit: 20,
+        limit: 100,
       },
     }
   );
 
   return response.data.itemSummaries || [];
 }
-
 async function main() {
   try {
     const token = await getToken();
-
     const items = await searchEbay(token);
 
-    const products = items.map((item, index) => ({
-      id: index + 1,
+    // Read existing products
+    let existing = [];
+
+    if (fs.existsSync("data.json")) {
+      existing = JSON.parse(
+        fs.readFileSync("data.json", "utf8")
+      );
+    }
+
+    // Convert new eBay items
+    const newProducts = items.map((item) => ({
+      id: item.itemId || item.itemWebUrl,,
       name: item.title,
       price: item.price ? item.price.value : "N/A",
       image: item.image ? item.image.imageUrl : "",
@@ -55,14 +63,30 @@ async function main() {
       description: item.title,
     }));
 
-    fs.writeFileSync(
-      "data.json",
-      JSON.stringify(products, null, 2)
+    // Merge old + new
+    const combined = [...existing, ...newProducts];
+
+    // Remove duplicates by eBay URL
+    const unique = combined.filter(
+      (product, index, self) =>
+        index === self.findIndex(
+          p => p.ebay === product.ebay
+        )
     );
 
-    console.log("products.json updated");
+    fs.writeFileSync(
+      "data.json",
+      JSON.stringify(unique, null, 2)
+    );
+
+    console.log(
+      `Saved ${unique.length} total products`
+    );
+
   } catch (err) {
-    console.error(err.response?.data || err.message);
+    console.error(
+      err.response?.data || err.message
+    );
   }
 }
 
