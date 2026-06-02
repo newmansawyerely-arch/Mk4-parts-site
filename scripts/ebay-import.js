@@ -54,7 +54,7 @@ async function main() {
 
     // Convert new eBay items
     const newProducts = items.map((item) => ({
-      id: item.itemId || item.itemWebUrl,,
+      id: item.itemId || item.itemWebUrl,
       name: item.title,
       price: item.price ? item.price.value : "N/A",
       image: item.image ? item.image.imageUrl : "",
