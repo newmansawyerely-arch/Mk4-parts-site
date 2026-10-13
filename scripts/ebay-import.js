@@ -101,7 +101,9 @@ async function main() {
     const allProducts = Array.from(productsByKey.values());
     const products = [];
     let siliconeIntakeHosesKept = 0;
+    let radiatorHoseListingsKept = 0;
     const siliconeIntakeHosePattern = /\b(silicone|silicon)\b.*\b(intake|induction)\b.*\b(pipe|hose|tub(e|ing))\b|\b(intake|induction)\b.*\b(pipe|hose|tub(e|ing))\b.*\b(silicone|silicon)\b/i;
+    const radiatorHosePattern = /\b(radiator|coolant)\b.*\b(hose|hoses|pipe|piping|tube|tubing|kit)\b|\b(hose|hoses|pipe|piping|tube|tubing|kit)\b.*\b(radiator|coolant)\b/i;
 
     for (const product of allProducts) {
       const title = String(product.name || product.description || "");
@@ -109,11 +111,15 @@ async function main() {
         if (siliconeIntakeHosesKept >= 2) continue;
         siliconeIntakeHosesKept++;
       }
+      if (radiatorHosePattern.test(title)) {
+        if (radiatorHoseListingsKept >= 2) continue;
+        radiatorHoseListingsKept++;
+      }
       products.push(product);
     }
 
     fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\n");
-    console.log("Saved " + products.length + " total products (kept " + siliconeIntakeHosesKept + " silicone intake/induction hose listings)");
+    console.log("Saved " + products.length + " total products (kept " + siliconeIntakeHosesKept + " silicone intake/induction hose listings and " + radiatorHoseListingsKept + " radiator/coolant hose listings)");
   } catch (err) {
     console.error(err.response?.data || err.message);
     process.exitCode = 1;
