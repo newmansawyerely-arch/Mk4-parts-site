@@ -1,6 +1,6 @@
 let partsData = [];
 
-fetch("./data.json")
+fetch("./data.json?updated=" + Date.now(), { cache: "no-store" })
   .then(res => {
     if (!res.ok) {
       throw new Error("Could not load data.json");
