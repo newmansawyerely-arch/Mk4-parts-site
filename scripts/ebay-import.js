@@ -96,9 +96,24 @@ async function main() {
       if (key) productsByKey.set(key, { ...(productsByKey.get(key) || {}), ...product });
     }
 
-    const products = Array.from(productsByKey.values());
-    fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\n");
-    console.log(`Saved ${products.length} total products`);
+    // Keep the engine category from being flooded with near-identical
+    // silicone intake/induction hoses. Keep at most two distinct listings.
+    const allProducts = Array.from(productsByKey.values());
+    const products = [];
+    let siliconeIntakeHosesKept = 0;
+    const siliconeIntakeHosePattern = /\\b(silicone|silicon)\\b.*\\b(intake|induction)\\b.*\\b(pipe|hose|tub(e|ing))\\b|\\b(intake|induction)\\b.*\\b(pipe|hose|tub(e|ing))\\b.*\\b(silicone|silicon)\\b/i;
+
+    for (const product of allProducts) {
+      const title = String(product.name || product.description || "");
+      if (siliconeIntakeHosePattern.test(title)) {
+        if (siliconeIntakeHosesKept >= 2) continue;
+        siliconeIntakeHosesKept++;
+      }
+      products.push(product);
+    }
+
+    fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\\n");
+    console.log(`Saved ${products.length} total products (kept ${siliconeIntakeHosesKept} silicone intake/induction hose listings)`);
   } catch (err) {
     console.error(err.response?.data || err.message);
     process.exitCode = 1;
