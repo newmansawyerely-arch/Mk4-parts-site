@@ -9,16 +9,10 @@ async function getToken() {
     "https://api.ebay.com/identity/v1/oauth2/token",
     "grant_type=client_credentials&scope=https://api.ebay.com/oauth/api_scope",
     {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      auth: {
-        username: CLIENT_ID,
-        password: CLIENT_SECRET,
-      },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      auth: { username: CLIENT_ID, password: CLIENT_SECRET },
     }
   );
-
   return response.data.access_token;
 }
 
@@ -26,67 +20,75 @@ async function searchEbay(token) {
   const response = await axios.get(
     "https://api.ebay.com/buy/browse/v1/item_summary/search",
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        q: "MK4 Golf GTI parts",
-        limit: 100,
-      },
+      headers: { Authorization: `Bearer ${token}` },
+      params: { q: "MK4 Golf GTI parts", limit: 100 },
     }
   );
-
   return response.data.itemSummaries || [];
 }
+
+function categorizeProduct(name = "") {
+  const title = name.toLowerCase();
+  const rules = [
+    ["brakes", /\b(brake|rotor|caliper|brake pad|brake line|master cylinder|abs sensor)\b/],
+    ["suspension", /\b(suspension|coilover|shock|strut|spring|control arm|sway bar|tie rod|ball joint|wheel bearing|bushing)\b/],
+    ["interior", /\b(interior|seat|floor mat|carpet|shift knob|steering wheel|door panel|window switch|radio|head unit|gauge cluster)\b/],
+    ["exterior", /\b(exterior|bumper|fender|hood|grille|headlight|tail light|taillight|mirror|spoiler|body kit|door handle|windshield|wiper|wheel rim)\b/],
+    ["engine", /\b(engine|turbo|intake|intercooler|spark plug|ignition coil|coil pack|fuel pump|injector|oil filter|water pump|timing belt|alternator|starter|radiator|thermostat|clutch|transmission|exhaust|downpipe|sensor|gasket|piston|camshaft|crankshaft)\b/],
+  ];
+  for (const [category, pattern] of rules) {
+    if (pattern.test(title)) return category;
+  }
+  return "other";
+}
+
 async function main() {
   try {
     const token = await getToken();
     const items = await searchEbay(token);
-
-    // Read existing products
     let existing = [];
 
     if (fs.existsSync("data.json")) {
-      existing = JSON.parse(
-        fs.readFileSync("data.json", "utf8")
-      );
+      const raw = fs.readFileSync("data.json", "utf8").trim();
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) existing = parsed;
+      }
     }
 
-    // Convert new eBay items
-    const newProducts = items.map((item) => ({
-      id: item.itemId || item.itemWebUrl,
-      name: item.title,
-      price: item.price ? item.price.value : "N/A",
-      image: item.image ? item.image.imageUrl : "",
-      ebay: item.itemWebUrl,
-      category: "mk4-parts",
-      description: item.title,
-    }));
+    // Correct legacy categories and keep existing listings.
+    const productsByKey = new Map();
+    for (const product of existing) {
+      if (!product || typeof product !== "object") continue;
+      const normalized = {
+        ...product,
+        category: categorizeProduct(product.name || product.description || ""),
+      };
+      const key = normalized.ebay || normalized.id || normalized.name;
+      if (key) productsByKey.set(key, normalized);
+    }
 
-    // Merge old + new
-    const combined = [...existing, ...newProducts];
+    // Update current listings and deduplicate by eBay URL/ID.
+    for (const item of items) {
+      const product = {
+        id: item.itemId || item.itemWebUrl,
+        name: item.title || "MK4 Golf part",
+        price: item.price ? item.price.value : "N/A",
+        image: item.image ? item.image.imageUrl : "",
+        ebay: item.itemWebUrl || "",
+        category: categorizeProduct(item.title || ""),
+        description: item.title || "",
+      };
+      const key = product.ebay || product.id || product.name;
+      if (key) productsByKey.set(key, { ...(productsByKey.get(key) || {}), ...product });
+    }
 
-    // Remove duplicates by eBay URL
-    const unique = combined.filter(
-      (product, index, self) =>
-        index === self.findIndex(
-          p => p.ebay === product.ebay
-        )
-    );
-
-    fs.writeFileSync(
-      "data.json",
-      JSON.stringify(unique, null, 2)
-    );
-
-    console.log(
-      `Saved ${unique.length} total products`
-    );
-
+    const products = Array.from(productsByKey.values());
+    fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\n");
+    console.log(`Saved ${products.length} total products`);
   } catch (err) {
-    console.error(
-      err.response?.data || err.message
-    );
+    console.error(err.response?.data || err.message);
+    process.exitCode = 1;
   }
 }
 
