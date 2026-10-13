@@ -28,17 +28,16 @@ async function searchEbay(token) {
 }
 
 function productKey(product) {
-  // eBay item URLs can differ only by tracking/query parameters.
-  // Prefer the stable eBay item ID so the same listing is stored once.
+  // Prefer the stable eBay item ID; ignore URL tracking/query parameters.
   const id = String(product.id || "");
   const parts = id.split("|");
-  if (parts.length >= 2 && /^v1$/.test(parts[0]) && /^\\d+$/.test(parts[1])) {
+  if (parts.length >= 2 && parts[0] === "v1" && /^\d+$/.test(parts[1])) {
     return parts.slice(0, 3).join("|");
   }
   const url = String(product.ebay || "");
-  const match = url.match(/\\/itm\\/(?:[^/]+\\/)?(\\d{9,15})/);
+  const match = url.match(/\/itm\/(?:[^/]+\/)?(\d{9,15})/);
   if (match) return match[1];
-  return url || id || String(product.name || "").toLowerCase().replace(/\\s+/g, " ").trim();
+  return url || id || String(product.name || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 function categorizeProduct(name = "") {
