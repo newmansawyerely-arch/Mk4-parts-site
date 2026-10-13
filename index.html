@@ -2,33 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MK4GolfParts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101820">
+  <meta name="description" content="Find parts and upgrades for the Volkswagen Golf and GTI Mk4. Browse engine, suspension, brake, interior and exterior parts.">
+  <title>MK4GolfParts | Parts for Your Mk4 Golf & GTI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="top-strip"><span>THE MK4 PARTS FINDER</span><span>GOLF • GTI • JETTA • R32</span></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="MK4GolfParts home">
+      <span class="brand-mark">MK<span>4</span></span>
+      <span class="brand-name">GOLF<span>PARTS</span></span>
+    </a>
+    <span class="header-note">YOUR NEXT BUILD STARTS HERE.</span>
+  </header>
 
-<header class="header">
-  <h1>MK4GolfParts</h1>
-  <p class="tagline">Find the Best Parts for Your MK4 Golf</p>
-</header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> MADE FOR THE FOURTH GENERATION</p>
+        <h1>KEEP YOUR<br><em>MK4</em> ON THE ROAD.</h1>
+        <p class="hero-text">Find parts, fix what’s worn, and build the Golf or GTI you want—without digging through endless listings.</p>
+        <a class="hero-link" href="#parts">BROWSE THE PARTS <span>↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div>
+        <div class="hero-number">04</div>
+        <div class="hero-caption">THE MK4 ERA<br><strong>1999—2005</strong></div>
+        <div class="hero-line"></div>
+      </div>
+    </section>
 
-<div class="controls">
-  <input type="text" id="search" placeholder="Search parts...">
+    <section class="parts-section" id="parts">
+      <div class="section-heading">
+        <div><p class="eyebrow">FIND YOUR FIX</p><h2>SHOP <span>PARTS</span></h2></div>
+        <p class="section-note">Search the catalog. Choose a category.<br>Get back to driving.</p>
+      </div>
+      <div class="controls">
+        <label class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Search parts (e.g. coilovers, brakes…)" aria-label="Search parts"></label>
+        <label class="category-wrap"><span class="sr-only">Filter by category</span><select id="category">
+          <option value="all">All Categories</option>
+          <option value="engine">Engine</option>
+          <option value="suspension">Suspension</option>
+          <option value="brakes">Brakes</option>
+          <option value="exterior">Exterior</option>
+          <option value="interior">Interior</option>
+          <option value="other">Other Parts</option>
+        </select></label>
+      </div>
+      <div class="results-bar"><span id="results-count">LOADING CATALOG…</span><span>MK4 GOLF / GTI PARTS</span></div>
+      <div id="products" aria-live="polite"></div>
+    </section>
+  </main>
 
-  <select id="category">
-    <option value="all">All Categories</option>
-    <option value="engine">Engine</option>
-    <option value="suspension">Suspension</option>
-    <option value="brakes">Brakes</option>
-    <option value="exterior">Exterior</option>
-    <option value="interior">Interior</option>
-    <option value="other">Other Parts</option>
-  </select>
-</div>
-
-<main id="products"></main>
-
-<script src="script.js"></script>
+  <footer class="site-footer"><a class="footer-brand" href="./">MK4<span>GOLFPARTS</span></a><p>Independent parts finder for the Mk4 community.</p><p class="footer-small">Prices and availability may change. Check the seller’s listing before ordering.</p></footer>
+  <script src="script.js"></script>
 </body>
 </html>
