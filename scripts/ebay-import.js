@@ -27,6 +27,20 @@ async function searchEbay(token) {
   return response.data.itemSummaries || [];
 }
 
+function productKey(product) {
+  // eBay item URLs can differ only by tracking/query parameters.
+  // Prefer the stable eBay item ID so the same listing is stored once.
+  const id = String(product.id || "");
+  const parts = id.split("|");
+  if (parts.length >= 2 && /^v1$/.test(parts[0]) && /^\\d+$/.test(parts[1])) {
+    return parts.slice(0, 3).join("|");
+  }
+  const url = String(product.ebay || "");
+  const match = url.match(/\\/itm\\/(?:[^/]+\\/)?(\\d{9,15})/);
+  if (match) return match[1];
+  return url || id || String(product.name || "").toLowerCase().replace(/\\s+/g, " ").trim();
+}
+
 function categorizeProduct(name = "") {
   const title = name.toLowerCase();
   const rules = [
@@ -64,7 +78,7 @@ async function main() {
         ...product,
         category: categorizeProduct(product.name || product.description || ""),
       };
-      const key = normalized.ebay || normalized.id || normalized.name;
+      const key = productKey(normalized);
       if (key) productsByKey.set(key, normalized);
     }
 
@@ -79,7 +93,7 @@ async function main() {
         category: categorizeProduct(item.title || ""),
         description: item.title || "",
       };
-      const key = product.ebay || product.id || product.name;
+      const key = productKey(product);
       if (key) productsByKey.set(key, { ...(productsByKey.get(key) || {}), ...product });
     }
 
