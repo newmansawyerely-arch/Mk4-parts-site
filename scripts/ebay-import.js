@@ -113,7 +113,7 @@ async function main() {
     }
 
     fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\n");
-    console.log(\`Saved \${products.length} total products (kept \${siliconeIntakeHosesKept} silicone intake/induction hose listings)\`);
+    console.log("Saved " + products.length + " total products (kept " + siliconeIntakeHosesKept + " silicone intake/induction hose listings)");
   } catch (err) {
     console.error(err.response?.data || err.message);
     process.exitCode = 1;
