@@ -101,7 +101,7 @@ async function main() {
     const allProducts = Array.from(productsByKey.values());
     const products = [];
     let siliconeIntakeHosesKept = 0;
-    const siliconeIntakeHosePattern = /\\b(silicone|silicon)\\b.*\\b(intake|induction)\\b.*\\b(pipe|hose|tub(e|ing))\\b|\\b(intake|induction)\\b.*\\b(pipe|hose|tub(e|ing))\\b.*\\b(silicone|silicon)\\b/i;
+    const siliconeIntakeHosePattern = /\b(silicone|silicon)\b.*\b(intake|induction)\b.*\b(pipe|hose|tub(e|ing))\b|\b(intake|induction)\b.*\b(pipe|hose|tub(e|ing))\b.*\b(silicone|silicon)\b/i;
 
     for (const product of allProducts) {
       const title = String(product.name || product.description || "");
@@ -112,8 +112,8 @@ async function main() {
       products.push(product);
     }
 
-    fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\\n");
-    console.log(`Saved ${products.length} total products (kept ${siliconeIntakeHosesKept} silicone intake/induction hose listings)`);
+    fs.writeFileSync("data.json", JSON.stringify(products, null, 2) + "\n");
+    console.log(\`Saved \${products.length} total products (kept \${siliconeIntakeHosesKept} silicone intake/induction hose listings)\`);
   } catch (err) {
     console.error(err.response?.data || err.message);
     process.exitCode = 1;
