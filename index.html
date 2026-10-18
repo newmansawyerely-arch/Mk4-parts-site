@@ -29,11 +29,23 @@
         <p class="hero-text">Find parts, fix what’s worn, and build the Golf or GTI you want—without digging through endless listings.</p>
         <a class="hero-link" href="#parts">BROWSE THE PARTS <span>↓</span></a>
       </div>
-      <div class="hero-art" aria-hidden="true">
+      <div class="hero-art" aria-label="Mk4 Golf inspired graphic">
         <div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div>
-        <div class="hero-number">04</div>
-        <div class="hero-caption">THE MK4 ERA<br><strong>1999—2005</strong></div>
+        <div class="hero-number">MK4</div>
+        <div class="hero-caption">BUILT FOR THE PLATFORM<br><strong>GOLF • GTI • JETTA • R32</strong></div>
         <div class="hero-line"></div>
+      </div>
+    </section>
+
+    <section class="category-section" aria-labelledby="category-title">
+      <div class="section-heading"><div><p class="eyebrow">START HERE</p><h2 id="category-title">FIND YOUR <span>PART</span></h2></div><p class="section-note">Go straight to the system<br>you’re working on.</p></div>
+      <div class="category-tiles">
+        <button class="category-tile" data-category="engine"><span class="tile-symbol">01</span><strong>Engine & Turbo</strong><small>Intake, ignition, cooling</small></button>
+        <button class="category-tile" data-category="suspension"><span class="tile-symbol">02</span><strong>Suspension</strong><small>Coilovers, shocks, arms</small></button>
+        <button class="category-tile" data-category="brakes"><span class="tile-symbol">03</span><strong>Brakes</strong><small>Rotors, pads, calipers</small></button>
+        <button class="category-tile" data-category="exterior"><span class="tile-symbol">04</span><strong>Exterior</strong><small>Lights, trim, body</small></button>
+        <button class="category-tile" data-category="interior"><span class="tile-symbol">05</span><strong>Interior</strong><small>Console, switches, trim</small></button>
+        <button class="category-tile" data-category="maintenance"><span class="tile-symbol">06</span><strong>Maintenance</strong><small>Filters, belts, service items</small></button>
       </div>
     </section>
 
@@ -51,15 +63,31 @@
           <option value="brakes">Brakes</option>
           <option value="exterior">Exterior</option>
           <option value="interior">Interior</option>
+          <option value="maintenance">Maintenance</option>
           <option value="other">Other Parts</option>
         </select></label>
+        <label class="filter-wrap"><span class="sr-only">Filter by price</span><select id="price-filter"><option value="all">Any Price</option><option value="0-25">Under $25</option><option value="25-50">$25–$50</option><option value="50-100">$50–$100</option><option value="100+">$100+</option></select></label>
+        <label class="filter-wrap"><span class="sr-only">Filter by part type</span><select id="type-filter"><option value="all">All Part Types</option><option value="oem">OEM / Genuine (title says OEM or genuine)</option><option value="replacement">Replacement Parts</option><option value="performance">Performance Upgrades</option></select></label>
+        <label class="filter-wrap"><span class="sr-only">Filter by vehicle or engine</span><select id="vehicle-filter"><option value="all">All Fitments</option><option value="golf">Golf mentioned</option><option value="gti">GTI mentioned</option><option value="jetta">Jetta mentioned</option><option value="18t">1.8T mentioned</option><option value="20l">2.0L mentioned</option><option value="vr6">VR6 / R32 mentioned</option></select></label>
       </div>
+      <div class="active-filters"><button id="clear-filters" type="button">CLEAR FILTERS ×</button><span>Compatibility labels are based on listing text; verify fitment with the seller.</span></div>
       <div class="results-bar"><span id="results-count">LOADING CATALOG…</span><span>MK4 GOLF / GTI PARTS</span></div>
       <div id="products" aria-live="polite"></div>
     </section>
+
+    <section class="garage-section" id="garage">
+      <div class="section-heading"><div><p class="eyebrow">THE MK4 GARAGE</p><h2>KNOW BEFORE YOU <span>WRENCH</span></h2></div><p class="section-note">Quick starting points for your next job.</p></div>
+      <div class="guide-grid">
+        <article class="guide-card"><span>01 / MAINTENANCE</span><h3>Start with the basics</h3><p>Review service history, fluid condition, belts, hoses, filters, brakes, tires and leaks before performance upgrades.</p><button data-guide="maintenance" class="text-button">Browse maintenance parts ↗</button></article>
+        <article class="guide-card"><span>02 / 1.8T OWNERS</span><h3>Check the supporting parts</h3><p>When servicing a 1.8T, confirm the exact engine code and verify fitment for ignition, intake, cooling and timing components.</p><button data-guide="engine" class="text-button">Browse engine parts ↗</button></article>
+        <article class="guide-card"><span>03 / FITMENT</span><h3>Confirm before ordering</h3><p>Compare engine code, model year, body style, transmission and part number. Ask the seller if any detail is unclear.</p><button data-guide="all" class="text-button">Search the catalog ↗</button></article>
+        <article class="guide-card"><span>04 / UPGRADES</span><h3>Build in the right order</h3><p>Make sure maintenance and safety items are in good shape before choosing suspension, brake or engine performance upgrades.</p><button data-guide="suspension" class="text-button">Browse upgrades ↗</button></article>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer"><a class="footer-brand" href="./">MK4<span>GOLFPARTS</span></a><p>Independent parts finder for the Mk4 community.</p><p class="footer-small">Prices and availability may change. Check the seller’s listing before ordering.</p></footer>
+  <footer class="site-footer"><a class="footer-brand" href="./">MK4<span>GOLFPARTS</span></a><p>Independent parts finder for the Mk4 community. Not affiliated with or endorsed by Volkswagen.</p><p class="footer-small">Prices and availability may change. Verify fitment with the seller before ordering.</p><p class="affiliate-disclosure">Affiliate disclosure: Some links may earn us a commission at no additional cost to you.</p></footer>
+  <button id="back-to-top" type="button" aria-label="Back to top">↑</button>
   <script src="script.js"></script>
 </body>
 </html>
