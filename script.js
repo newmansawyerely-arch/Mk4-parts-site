@@ -128,6 +128,10 @@ externalSearch.addEventListener("click", () => {
   const query = controls.search.value.trim() || "Volkswagen Mk4 Golf GTI parts";
   window.open("https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(query), "_blank", "noopener,noreferrer");
 });
+document.getElementById("search-amazon").addEventListener("click", () => {
+  const query = controls.search.value.trim() || "Volkswagen Mk4 Golf GTI parts";
+  window.open("https://www.amazon.com/s?k=" + encodeURIComponent(query), "_blank", "noopener,noreferrer");
+});
 document.querySelectorAll("[data-category]").forEach(button => button.addEventListener("click", () => {
   controls.category.value = button.dataset.category;
   document.getElementById("parts").scrollIntoView({behavior:"smooth"});
