@@ -102,3 +102,45 @@ select option { background:#17232d; color:white; }
 }
 @media (max-width:390px) { #products { grid-template-columns:1fr; } .card-image { height:230px; } .section-note { display:none; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+/* Expanded catalog, category shortcuts, filters and garage guides */
+.category-section,.garage-section { max-width:1440px; margin:0 auto; padding:48px clamp(18px,5vw,76px); }
+.category-section { border-bottom:1px solid var(--line); }
+.category-tiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:24px; }
+.category-tile { display:flex; flex-direction:column; align-items:flex-start; gap:7px; min-height:130px; padding:18px; border:1px solid #34434e; background:linear-gradient(135deg,#1b2934,#131e27); color:var(--text); text-align:left; cursor:pointer; transition:transform .2s,border-color .2s; }
+.category-tile:hover,.category-tile:focus-visible { transform:translateY(-3px); border-color:var(--accent); outline:none; }
+.tile-symbol { color:var(--accent); font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:800; }
+.category-tile strong { font-size:14px; }
+.category-tile small { color:var(--muted); font-size:11px; }
+.controls { grid-template-columns:minmax(0,1.4fr) minmax(150px,.8fr); }
+.filter-wrap { display:flex; align-items:center; min-width:0; min-height:46px; border:1px solid #35444f; background:#141f28; }
+.filter-wrap:focus-within { border-color:var(--accent); }
+.filter-wrap select { height:46px; font-size:12px; }
+.active-filters { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:12px; color:var(--muted); font-size:10px; line-height:1.5; }
+#clear-filters { padding:7px 10px; border:1px solid #51606a; background:transparent; color:var(--accent); font-size:9px; font-weight:800; letter-spacing:1px; cursor:pointer; white-space:nowrap; }
+.fitment-label { margin:10px 0 0; color:#b7c4cb; font-size:9px; line-height:1.5; }
+.product-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.product-tags span { padding:4px 6px; border:1px solid #4b5a64; color:#cbd6dc; font-size:8px; font-weight:800; letter-spacing:.4px; }
+.guide-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; margin-top:24px; }
+.guide-card { display:flex; flex-direction:column; align-items:flex-start; min-height:245px; padding:20px; border:1px solid var(--line); background:var(--panel); }
+.guide-card>span { color:var(--accent); font-size:9px; font-weight:800; letter-spacing:1.2px; }
+.guide-card h3 { margin:18px 0 8px; font-family:'Barlow Condensed',sans-serif; font-size:24px; line-height:1.05; }
+.guide-card p { margin:0 0 18px; color:var(--muted); font-size:11px; line-height:1.75; }
+.text-button { margin-top:auto; padding:0; border:0; background:transparent; color:var(--accent); font:inherit; font-size:10px; font-weight:800; text-align:left; cursor:pointer; }
+.affiliate-disclosure { max-width:700px; margin:14px auto 0!important; color:#aeb9bf!important; line-height:1.7; }
+#back-to-top { position:fixed; right:20px; bottom:20px; z-index:10; display:grid; place-items:center; width:44px; height:44px; border:1px solid #3c4c56; border-radius:50%; background:var(--accent); color:var(--bg); font-size:24px; font-weight:800; cursor:pointer; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .2s,transform .2s; }
+#back-to-top.visible { opacity:1; pointer-events:auto; transform:translateY(0); }
+@media(max-width:1050px) { .guide-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .category-tiles { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:720px) {
+ .category-section,.garage-section { padding-top:38px; padding-bottom:38px; }
+ .category-tiles { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+ .category-tile { min-height:118px; padding:13px; }
+ .category-tile strong { font-size:12px; }
+ .category-tile small { font-size:10px; }
+ .controls { grid-template-columns:1fr 1fr; }
+ .search-wrap { grid-column:1/-1; }
+ .filter-wrap select { padding:0 8px; font-size:11px; }
+ .active-filters { align-items:flex-start; font-size:9px; }
+ .guide-grid { grid-template-columns:1fr; }
+ .guide-card { min-height:0; }
+ #back-to-top { right:13px; bottom:16px; }
+}
