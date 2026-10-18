@@ -1,7 +1,7 @@
 let partsData = [];
 
 const categoryLabels = {
-  engine: "Engine & Turbo", suspension: "Suspension", brakes: "Brakes",
+  engine: "Engine & Turbo", used: "Used Parts", suspension: "Suspension", brakes: "Brakes",
   exterior: "Exterior", interior: "Interior", maintenance: "Maintenance", other: "Other Parts"
 };
 
@@ -75,6 +75,7 @@ function displayParts(parts) {
     const amazon = String(part.amazon || "").trim();
     const text = searchableText(part);
     const tags = [];
+    if (part.condition === "used" || /\b(used|pre-owned|salvage|for parts or not working)\b/i.test(String(part.name || ""))) tags.push("USED");
     if (/\boem\b|genuine volkswagen|genuine vw|original equipment/i.test(text)) tags.push("OEM CLAIM IN LISTING");
     if (/performance|upgrade|racing|sport|coilover|turbo|intercooler|downpipe/i.test(text)) tags.push("PERFORMANCE");
     const fitment = [];
@@ -109,7 +110,8 @@ function filterParts() {
     const text = searchableText(part);
     const p = priceNumber(part);
     const searchMatch = !search || text.includes(search);
-    const categoryMatch = category === "all" || part.category === category;
+    const isUsed = part.condition === "used" || /\b(used|pre-owned|salvage|for parts or not working)\b/i.test(String(part.name || ""));
+    const categoryMatch = category === "used" ? isUsed : category === "all" ? !isUsed : part.category === category && !isUsed;
     const priceMatch = priceRange === "all" ||
       (p !== null && (priceRange === "0-25" ? p < 25 :
         priceRange === "25-50" ? p >= 25 && p <= 50 :
@@ -120,6 +122,11 @@ function filterParts() {
 }
 Object.values(controls).forEach(control => {
   control.addEventListener(control.tagName === "INPUT" ? "input" : "change", filterParts);
+});
+const externalSearch = document.getElementById("search-ebay");
+externalSearch.addEventListener("click", () => {
+  const query = controls.search.value.trim() || "Volkswagen Mk4 Golf GTI parts";
+  window.open("https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(query), "_blank", "noopener,noreferrer");
 });
 document.querySelectorAll("[data-category]").forEach(button => button.addEventListener("click", () => {
   controls.category.value = button.dataset.category;
