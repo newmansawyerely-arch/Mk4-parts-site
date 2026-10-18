@@ -144,3 +144,7 @@ select option { background:#17232d; color:white; }
  .guide-card { min-height:0; }
  #back-to-top { right:13px; bottom:16px; }
 }
+
+.search-ebay-btn { min-height:46px; padding:0 14px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-size:10px; font-weight:800; letter-spacing:.8px; cursor:pointer; }
+.search-ebay-btn:hover { background:var(--accent); color:var(--bg); }
+@media(max-width:720px){ .search-ebay-btn { grid-column:1/-1; width:100%; } }
