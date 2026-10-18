@@ -17,14 +17,24 @@ async function getToken() {
 }
 
 async function searchEbay(token) {
-  const response = await axios.get(
-    "https://api.ebay.com/buy/browse/v1/item_summary/search",
-    {
-      headers: { Authorization: `Bearer ${token}` },
-      params: { q: "MK4 Golf GTI parts", limit: 100 },
-    }
-  );
-  return response.data.itemSummaries || [];
+  const queries = [
+    "MK4 Golf GTI parts",
+    "VW MK4 Golf maintenance parts filter belt water pump",
+    "MK4 Golf GTI coilovers suspension",
+    "MK4 Golf GTI brake parts",
+    "MK4 Golf GTI coolant radiator hose"
+  ];
+  const results = await Promise.all(queries.map(async q => {
+    const response = await axios.get(
+      "https://api.ebay.com/buy/browse/v1/item_summary/search",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { q, limit: 50, filter: "buyingOptions:{FIXED_PRICE}" },
+      }
+    );
+    return response.data.itemSummaries || [];
+  }));
+  return results.flat();
 }
 
 function productKey(product) {
@@ -70,13 +80,22 @@ async function main() {
       }
     }
 
+    // Keep hand-picked featured products even when the automatic listing search changes.
+    if (fs.existsSync("featured-products.json")) {
+      const featured = JSON.parse(fs.readFileSync("featured-products.json", "utf8"));
+      if (Array.isArray(featured)) existing.push(...featured);
+    }
+
     // Correct legacy categories and keep existing listings.
     const productsByKey = new Map();
     for (const product of existing) {
       if (!product || typeof product !== "object") continue;
+      const title = String(product.name || product.description || "");
+      const isUsed = product.condition === "used" || /\b(used|pre-owned|salvage|for parts or not working)\b/i.test(title);
       const normalized = {
         ...product,
-        category: categorizeProduct(product.name || product.description || ""),
+        condition: isUsed ? "used" : (product.condition || "unknown"),
+        category: isUsed ? "used" : (product.featured ? product.category : categorizeProduct(title)),
       };
       const key = productKey(normalized);
       if (key) productsByKey.set(key, normalized);
@@ -90,11 +109,15 @@ async function main() {
         price: item.price ? item.price.value : "N/A",
         image: item.image ? item.image.imageUrl : "",
         ebay: item.itemWebUrl || "",
-        category: categorizeProduct(item.title || ""),
+        condition: /\b(used|pre-owned|salvage|for parts or not working)\b/i.test(String(item.title || "")) || /used/i.test(String(item.condition || "")) ? "used" : "new",
+        category: /\b(used|pre-owned|salvage|for parts or not working)\b/i.test(String(item.title || "")) || /used/i.test(String(item.condition || "")) ? "used" : categorizeProduct(item.title || ""),
         description: item.title || "",
       };
       const key = productKey(product);
-      if (key) productsByKey.set(key, { ...(productsByKey.get(key) || {}), ...product });
+      if (key) {
+        const previous = productsByKey.get(key) || {};
+        productsByKey.set(key, { ...previous, ...product, featured: previous.featured || product.featured || false });
+      }
     }
 
     // Keep the engine category from being flooded with near-identical
