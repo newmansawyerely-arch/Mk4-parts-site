@@ -43,7 +43,7 @@ function productKey(product) {
 function categorizeProduct(name = "") {
   const title = name.toLowerCase();
   const rules = [
-    ["maintenance", /\\b(oil filter|air filter|cabin filter|fuel filter|maintenance kit|timing belt kit|serpentine belt|drive belt|coolant hose|radiator hose|heater hose|service kit|wiper blade)\\b/],
+    ["maintenance", /\b(oil filter|air filter|cabin filter|fuel filter|maintenance kit|timing belt kit|serpentine belt|drive belt|coolant hose|radiator hose|heater hose|service kit|wiper blade)\b/],
     ["brakes", /\b(brake|rotor|caliper|brake pad|brake line|master cylinder|abs sensor)\b/],
     ["suspension", /\b(suspension|coilover|shock|strut|spring|control arm|sway bar|tie rod|ball joint|wheel bearing|bushing)\b/],
     ["interior", /\b(interior|seat|floor mat|carpet|shift knob|steering wheel|door panel|window switch|radio|head unit|gauge cluster)\b/],
